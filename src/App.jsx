@@ -13,6 +13,7 @@ function App() {
          <Header />
          <main className="main_container">
             <Routes>
+               <Route path="/fe-diploma" element={<HomePage />} />
                <Route path="/" element={<HomePage />} />
                <Route path="/order/*" element={<OrderPage />} />
             </Routes>
