@@ -2,8 +2,8 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-   date_start: undefined,
-   date_end: undefined,
+   date_start: `2021-04-14`,
+   date_end: `2021-04-16`,
    routeFrom: {
       id: '1491',
       city: 'москва',
@@ -32,9 +32,3 @@ const searchSlice = createSlice({
 
 export const { serchFieldChange, cityExchange } = searchSlice.actions;
 export default searchSlice.reducer;
-
-// const fetchUsers = () => async (dispatch) => {
-//    dispatch(usersLoading());
-//    const response = await usersAPI.fetchAll();
-//    dispatch(usersReceived(response.data));
-//  };

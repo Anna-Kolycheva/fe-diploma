@@ -37,7 +37,6 @@ export default function RouteInput({ placeholder, direction }) {
 
    const onFieldChangeDispatch = (id, city) => {
       setValue(city);
-      console.log(direction);
       dispatch(
          serchFieldChange({
             name: direction,

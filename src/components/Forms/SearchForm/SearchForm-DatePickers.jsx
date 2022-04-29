@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import React, { forwardRef, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
@@ -31,7 +30,7 @@ export default function DatePickers({ formView }) {
    const handleChange = (name, date) => {
       const str = date.toLocaleDateString();
       const format = `${str.slice(-4)}-${str.slice(3, 5)}-${str.slice(0, 2)}`;
-
+      console.log(format);
       dispatch(
          serchFieldChange({
             name,

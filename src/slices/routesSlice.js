@@ -4,7 +4,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchRoutes = createAsyncThunk(
-   'tickets/fetchRoutes',
+   'routes/fetchRoutes',
    async (_, { rejectWithValue, getState }) => {
       const { filter } = getState();
       const from_city_id = getState().search.routeFrom.id;
@@ -44,6 +44,7 @@ export const fetchRoutes = createAsyncThunk(
 
 const initialState = {
    routes: [],
+   // train: JSON.parse(localStorage.getItem('train')) || null,
    status: null,
    error: null,
    total_count: 0,
@@ -58,6 +59,13 @@ const routesSlice = createSlice({
       routesClear: (state) => {
          state.routes.length = 0;
       },
+      // trainAdd: (state, action) => {
+      //    state.train = action.payload;
+      //    localStorage.setItem('train', JSON.stringify(action.payload));
+      // },
+      // trainClear: (state) => {
+      //    state.train = null;
+      // },
    },
    extraReducers: {
       [fetchRoutes.pending]: (state) => {
@@ -76,5 +84,6 @@ const routesSlice = createSlice({
    },
 });
 
-export const { routesPush, routesClear } = routesSlice.actions;
+export const { routesPush, routesClear, trainAdd, trainClear } =
+   routesSlice.actions;
 export default routesSlice.reducer;

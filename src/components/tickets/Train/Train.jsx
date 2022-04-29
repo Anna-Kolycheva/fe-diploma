@@ -1,13 +1,19 @@
-/* eslint-disable react/destructuring-assignment */
 import React from 'react';
 import moment from 'moment';
 
+import { useNavigate } from 'react-router';
+import { useDispatch } from 'react-redux';
+
 import PriceFormat from '../../elements/PriceFormat';
+import { trainAdd } from '../../../slices/seatsSlice';
+
 import Duration from './Duration';
 import './Train.css';
 
 import trainLogo from '../../../img/tickets/ticket/trainLogo.svg';
 import trainLogoSmall from '../../../img/tickets/ticket/trainLogoSmall.svg';
+import clock from '../../../img/tickets/ticket/trainClock.svg';
+
 import rub from '../../../img/tickets/tickets-rub.svg';
 import {
    defaultRouteSvg,
@@ -17,23 +23,26 @@ import {
    wifi,
    express,
    food,
-} from './svg';
+} from '../svg';
 
-export default function Train(route, style, type) {
-   const { train } = route;
+export default function Train(route, type) {
+   const dispatch = useDispatch();
+   const novigate = useNavigate();
+   const { train, option } = route;
    const { departure, arrival } = train;
 
    const handleClick = () => {
-      console.log('ok');
+      dispatch(trainAdd(route));
+      novigate('/order/tickets/seats');
    };
 
    return (
-      <div className={`train order_train ${style || ''}`}>
+      <div className={`train order_train ${option || ''}`}>
          <div className="train_logo">
             <img
                className="train_logo-icon"
                src={
-                  style === 'ticket_header-train' ? trainLogoSmall : trainLogo
+                  option === 'ticket_header-train' ? trainLogoSmall : trainLogo
                }
                alt="Train"
             />
@@ -71,7 +80,7 @@ export default function Train(route, style, type) {
                      </p>
                   </div>
                   <div className="route_duration train_route-duration">
-                     {style !== 'ticket_header-train' && (
+                     {option !== 'ticket_header-train' && (
                         <p className="route_duration-time train_route-duration-time">
                            {moment
                               .unix(departure.duration)
@@ -111,7 +120,7 @@ export default function Train(route, style, type) {
                      </p>
                   </div>
                   <div className="route_duration train_route-duration train_route-duration">
-                     {style !== 'ticket_header-train' && (
+                     {option !== 'ticket_header-train' && (
                         <p className="route_duration-time train_route-duration-time">
                            {moment.unix(arrival.duration).utc().format('HH:mm')}
                         </p>
@@ -137,7 +146,7 @@ export default function Train(route, style, type) {
          </div>
 
          <div className="train_info">
-            {style !== 'ticket_header-train' && (
+            {option !== 'ticket_header-train' && (
                <>
                   <ul className="train_seats-list">
                      {departure.available_seats_info.fourth && (
@@ -231,21 +240,24 @@ export default function Train(route, style, type) {
                   <button
                      type="button"
                      className={`button ${
-                        style === 'verification'
+                        option === 'verification'
                            ? 'verification_button'
                            : 'train_seats-button'
                      }`}
                      onClick={handleClick}
                   >
-                     {style === 'verification' ? 'Изменить' : 'Выбрать места'}
+                     {option === 'verification' ? 'Изменить' : 'Выбрать места'}
                   </button>
                </>
             )}
-            {style === 'ticket_header-train' && (
-               <Duration
-                  hours={moment.unix(departure.duration).utc().format('H')}
-                  minutes={moment.unix(departure.duration).utc().format('m')}
-               />
+            {option === 'ticket_header-train' && (
+               <div className="train_time">
+                  <img className="train_icon-clock" src={clock} alt="clock" />
+                  <Duration
+                     hours={moment.unix(departure.duration).utc().format('H')}
+                     minutes={moment.unix(departure.duration).utc().format('m')}
+                  />
+               </div>
             )}
          </div>
       </div>

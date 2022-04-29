@@ -7,6 +7,7 @@ import OrderFormSet from '../components/OrderFormSet/OrderFormSet';
 import StageBar from '../components/StageBar/StageBar';
 import SideBar from '../components/SideBar/SideBar';
 import TrainList from '../components/tickets/TrainList';
+import Seats from '../components/tickets/Seats';
 
 export default function OrderPage() {
    return (
@@ -18,6 +19,7 @@ export default function OrderPage() {
 
             <Routes>
                <Route path="/tickets/train" element={<TrainList />} />
+               <Route path="/tickets/seats" element={<Seats />} />
                {/* <Route path="/tickets/seats*" element={<Seats />} /> */}
             </Routes>
          </div>

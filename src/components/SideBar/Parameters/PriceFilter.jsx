@@ -1,5 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import InputRange from 'react-input-range';
 import 'react-input-range/lib/css/index.css';

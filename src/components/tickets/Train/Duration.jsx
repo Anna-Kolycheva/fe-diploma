@@ -35,12 +35,14 @@ export default function Duration({ hours, minutes }) {
    return (
       <div className="train__info-duration">
          {hours} {formatHours()}
-         {'\n'} {minutes} {formatMinutes()}
+         <br />
+         {minutes} {formatMinutes()}
       </div>
    );
 }
 
 Duration.propTypes = {
-   hours: PropTypes.number.isRequired,
-   minutes: PropTypes.number.isRequired,
+   hours: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+   minutes: PropTypes.oneOfType([PropTypes.string, PropTypes.number])
+      .isRequired,
 };
