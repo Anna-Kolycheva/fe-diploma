@@ -6,6 +6,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import HomePage from './HomePage/HomePage';
 import OrderPage from './OrderPage/OrderPage';
+import SuccessPage from './SuccessPage/SuccessPage';
 
 function App() {
    return (
@@ -16,6 +17,7 @@ function App() {
                <Route path="/fe-diploma" element={<HomePage />} />
                <Route path="/" element={<HomePage />} />
                <Route path="/order/*" element={<OrderPage />} />
+               <Route path="/success/*" element={<SuccessPage />} />
             </Routes>
          </main>
          <Footer />

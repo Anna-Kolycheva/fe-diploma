@@ -30,7 +30,6 @@ export default function DatePickers({ formView }) {
    const handleChange = (name, date) => {
       const str = date.toLocaleDateString();
       const format = `${str.slice(-4)}-${str.slice(3, 5)}-${str.slice(0, 2)}`;
-      console.log(format);
       dispatch(
          serchFieldChange({
             name,

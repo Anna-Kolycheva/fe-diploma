@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 
 import Parametres from './Parameters/Parametres';
 import Last from './Last/Last';
-import Details from './Details';
+import Details from './Details/Details';
 
 export default function SideBar() {
    const { stage } = useSelector((state) => state.stage);

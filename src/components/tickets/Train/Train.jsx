@@ -32,6 +32,11 @@ export default function Train(route, type) {
    const { departure, arrival } = train;
 
    const handleClick = () => {
+      if (option === 'verification') {
+         novigate('/order/tickets/train');
+         return;
+      }
+
       dispatch(trainAdd(route));
       novigate('/order/tickets/seats');
    };

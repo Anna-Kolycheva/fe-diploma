@@ -1,6 +1,4 @@
 /* eslint-disable camelcase */
-/* eslint-disable jsx-a11y/control-has-associated-label */
-
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import InputRange from 'react-input-range';

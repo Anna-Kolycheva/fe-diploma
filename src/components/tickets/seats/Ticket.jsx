@@ -1,7 +1,4 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable no-underscore-dangle */
-
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -27,10 +24,6 @@ export default function Ticket({ type }) {
    const { passengersCount } = useSelector((state) => state.passengers);
    const dispatch = useDispatch();
    const navigate = useNavigate();
-
-   // useEffect(() => {
-   // dispatch(coachListFetch(train.departure._id));
-   // }, [dispatch, train.departure._id]);
 
    const available = {
       adult: 4 - passengersCount.adult - passengersCount.child,

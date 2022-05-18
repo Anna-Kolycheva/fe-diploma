@@ -42,7 +42,7 @@ const initialState = {
    status: null,
    error: null,
 
-   departure: {
+   departure: JSON.parse(localStorage.getItem('seats-departure')) || {
       coachClass: null,
       coachItems: [],
       seats: {},
@@ -50,7 +50,7 @@ const initialState = {
       services: {},
       coachList: [],
    },
-   arrival: {
+   arrival: JSON.parse(localStorage.getItem('seats-arrival')) || {
       coachClass: null,
       coachItems: [],
       seats: {},
@@ -73,12 +73,14 @@ const seatsSlice = createSlice({
       coachClassChange: (state, action) => {
          const { coachClass, type } = action.payload;
          state[type].coachClass = coachClass;
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       coachItemsSelect: (state, action) => {
          const { id, type } = action.payload;
          state[type].coachItems.push(id);
          state[type].services[id] = [];
          state[type].seats[id] = [];
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       coachItemsUnSelect: (state, action) => {
          const { id, type } = action.payload;
@@ -87,6 +89,7 @@ const seatsSlice = createSlice({
          );
          state[type].services[id] = [];
          state[type].seats[id] = [];
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       coachItemsClear: (state, action) => {
          const { type } = action.payload;
@@ -94,11 +97,13 @@ const seatsSlice = createSlice({
          state[type].services = {};
          state[type].seats = {};
          state[type].seatsCount = 0;
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       seatsItemSelect: (state, action) => {
          const { id, number, type } = action.payload;
          state[type].seats[id].push(number);
          state[type].seatsCount += 1;
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
 
       seatsItemUnSelect: (state, action) => {
@@ -107,16 +112,19 @@ const seatsSlice = createSlice({
             (el) => el !== number
          );
          state[type].seatsCount -= 1;
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       serviceItemSelect: (state, action) => {
          const { id, service, type } = action.payload;
          state[type].services[id].push(service);
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       serviceItemUnSelect: (state, action) => {
          const { id, service, type } = action.payload;
          state[type].services[id] = state[type].services[id].filter(
             (el) => el !== service
          );
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
    },
    extraReducers: {
@@ -128,6 +136,7 @@ const seatsSlice = createSlice({
          state.status = 'resolved';
          const { type, data } = action.payload;
          state[type].coachList = data;
+         localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
       [fetchSeats.rejected]: (state, action) => {
          state.status = 'rejected';

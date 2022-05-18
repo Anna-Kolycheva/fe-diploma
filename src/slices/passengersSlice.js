@@ -2,12 +2,12 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-   passengersCount: {
+   passengersCount: JSON.parse(localStorage.getItem('passengersCount')) || {
       adult: 0,
       child: 0,
       baby: 0,
    },
-   passengersPrice: {
+   passengersPrice: JSON.parse(localStorage.getItem('passengersPrice')) || {
       departure: {
          adult: 0,
          child: 0,
@@ -19,7 +19,7 @@ const initialState = {
          services: 0,
       },
    },
-   passengers: [],
+   passengers: JSON.parse(localStorage.getItem('passengers')) || [],
 };
 
 const passengersSlice = createSlice({
@@ -29,18 +29,37 @@ const passengersSlice = createSlice({
       passengersCountChange: (state, action) => {
          const { type, count } = action.payload;
          state.passengersCount[type] = count;
+         localStorage.setItem(
+            'passengersCount',
+            JSON.stringify(state.passengersCount)
+         );
       },
       passengersPriceChange: (state, action) => {
          const { type, price, typeTicket } = action.payload;
          state.passengersPrice[typeTicket][type] = price;
+         localStorage.setItem(
+            'passengersPrice',
+            JSON.stringify(state.passengersPrice)
+         );
       },
       addPassengersData: (state, action) => {
-         const { index, data } = action.payload;
-         if (state.passengers.filter((el) => el.number === index).length > 0) {
+         const { number, data } = action.payload;
+         if (state.passengers.filter((el) => el.number === number).length > 0) {
             state.passengers = state.passengers.map((el) =>
-               el.number === index ? data : el
+               el.number === number ? data : el
             );
-         } else state.passengers.push(data);
+            localStorage.setItem(
+               'passengers',
+               JSON.stringify(state.passengers)
+            );
+         } else {
+            state.passengers.push(data);
+         }
+         localStorage.setItem('passengers', JSON.stringify(state.passengers));
+      },
+      clearPassengersData: (state) => {
+         state.passengers = [];
+         localStorage.setItem('passengers', JSON.stringify([]));
       },
    },
 });
@@ -49,5 +68,6 @@ export const {
    passengersCountChange,
    passengersPriceChange,
    addPassengersData,
+   clearPassengersData,
 } = passengersSlice.actions;
 export default passengersSlice.reducer;

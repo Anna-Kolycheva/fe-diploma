@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { nanoid } from 'nanoid';
@@ -9,6 +7,7 @@ import Pagination from './Pagination/Pagination';
 
 import './TrainList.css';
 import { fetchRoutes } from '../../slices/routesSlice';
+import { stageChange } from '../../slices/stageSlice';
 
 export default function TrainList() {
    const dispatch = useDispatch();
@@ -18,6 +17,10 @@ export default function TrainList() {
    const { sort, limit } = filter;
 
    const limits = [5, 10, 20];
+
+   useEffect(() => {
+      dispatch(stageChange({ stage: 1 }));
+   }, []);
 
    useEffect(() => {
       dispatch(fetchRoutes());

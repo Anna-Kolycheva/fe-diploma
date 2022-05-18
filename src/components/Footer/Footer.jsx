@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import './Footer.css';
 import { HashLink } from 'react-router-hash-link';
@@ -88,19 +87,19 @@ export default function Footer() {
                      Подписывайтесь на нас
                   </h3>
                   <div className="footer_subscribe-icons">
-                     <a href="#" className="footer_subscribe-link">
+                     <a href="#/" className="footer_subscribe-link">
                         {youtube}
                      </a>
-                     <a href="#" className="footer_subscribe-link">
+                     <a href="#/" className="footer_subscribe-link">
                         {linkedin}
                      </a>
-                     <a href="#" className="footer_subscribe-link">
+                     <a href="#/" className="footer_subscribe-link">
                         {google}
                      </a>
-                     <a href="#" className="footer_subscribe-link">
+                     <a href="#/" className="footer_subscribe-link">
                         {facebook}
                      </a>
-                     <a href="#" className="footer_subscribe-link">
+                     <a href="#/" className="footer_subscribe-link">
                         {twitter}
                      </a>
                   </div>

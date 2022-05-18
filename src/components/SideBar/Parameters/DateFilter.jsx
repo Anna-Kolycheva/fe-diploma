@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable react/prop-types */
 
 import React, { forwardRef, useEffect, useState } from 'react';

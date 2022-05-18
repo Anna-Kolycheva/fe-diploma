@@ -44,7 +44,6 @@ export const fetchRoutes = createAsyncThunk(
 
 const initialState = {
    routes: [],
-   // train: JSON.parse(localStorage.getItem('train')) || null,
    status: null,
    error: null,
    total_count: 0,
@@ -59,13 +58,6 @@ const routesSlice = createSlice({
       routesClear: (state) => {
          state.routes.length = 0;
       },
-      // trainAdd: (state, action) => {
-      //    state.train = action.payload;
-      //    localStorage.setItem('train', JSON.stringify(action.payload));
-      // },
-      // trainClear: (state) => {
-      //    state.train = null;
-      // },
    },
    extraReducers: {
       [fetchRoutes.pending]: (state) => {

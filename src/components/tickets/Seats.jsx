@@ -1,12 +1,20 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+
 import { fetchSeats } from '../../slices/seatsSlice';
 import Ticket from './seats/Ticket';
 import './Seats.css';
 
 export default function Seats() {
    const dispatch = useDispatch();
+   const novigate = useNavigate();
    const { train } = useSelector((state) => state.seats.train);
+   const seatsDeparture = useSelector(
+      (state) => state.seats.departure.seatsCount
+   );
+   const seatsarrival = useSelector((state) => state.seats.arrival.seatsCount);
+   const { passengersCount } = useSelector((state) => state.passengers);
 
    useEffect(() => {
       dispatch(fetchSeats('departure'));
@@ -14,7 +22,16 @@ export default function Seats() {
    }, [dispatch]);
 
    const handleClick = () => {
-      console.log('wazzzap');
+      const passengersCountAll =
+         Number(passengersCount.adult) + Number(passengersCount.child);
+      if (
+         seatsDeparture !== 0 &&
+         seatsarrival !== 0 &&
+         Number(seatsDeparture) === passengersCountAll &&
+         Number(seatsarrival) === passengersCountAll
+      ) {
+         novigate('/order/passengers/');
+      }
    };
 
    return (
