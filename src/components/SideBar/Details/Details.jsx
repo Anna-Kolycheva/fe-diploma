@@ -117,90 +117,97 @@ export default function Details() {
                </div>
             </div>
          </div>
+         {arrival && (
+            <div className={`sidebar_inner ${arrival ? '' : 'hidden'}`}>
+               <div className="sidebar_header title-goBack">
+                  <h4 className="title title--small sidebar_title">
+                     Обратно{' '}
+                     <span className="sidebar_date">
+                        {moment
+                           .unix(arrival.from.datetime)
+                           .format('DD.MM.YYYY')}
+                     </span>
+                  </h4>
 
-         <div className={`sidebar_inner ${dateEnd ? '' : 'hidden'}`}>
-            <div className="sidebar_header title-goBack">
-               <h4 className="title title--small sidebar_title">
-                  Обратно{' '}
-                  <span className="sidebar_date">
-                     {moment.unix(arrival.from.datetime).format('DD.MM.YYYY')}
-                  </span>
-               </h4>
-
-               <button
-                  type="button"
-                  className={`details_arrival details_button ${
-                     !isHidden.arrival ? 'active-button' : 'inactive-button'
-                  }`}
-                  onClick={() => onHidden('arrival')}
-               />
-            </div>
-
-            <div className={`${isHidden.arrival ? '' : 'hidden'} `}>
-               <div className="details_info">
-                  <p className="details_info-title">№ Поезда</p>
-                  <p className="details_info-text details_info-text--train">
-                     {arrival.train.name}
-                  </p>
+                  <button
+                     type="button"
+                     className={`details_arrival details_button ${
+                        !isHidden.arrival ? 'active-button' : 'inactive-button'
+                     }`}
+                     onClick={() => onHidden('arrival')}
+                  />
                </div>
-               <div className="details_info details_info--city">
-                  <p className="details_info-title">Название</p>
-                  <p className="details_info-text details_info-text--route">
-                     {arrival.from.city.name}
-                     <br />
-                     {arrival.to.city.name}
-                  </p>
-               </div>
-               <div className="details_info details_info--route">
-                  <div className="route">
-                     <div className="route_info">
-                        <p className="route_time">
-                           {moment.unix(arrival.from.datetime).format('HH:mm')}
-                        </p>
-                        <p className="route_date">
-                           {moment
-                              .unix(arrival.from.datetime)
-                              .format('DD.MM.YYYY')}
-                        </p>
+
+               <div className={`${isHidden.arrival ? '' : 'hidden'} `}>
+                  <div className="details_info">
+                     <p className="details_info-title">№ Поезда</p>
+                     <p className="details_info-text details_info-text--train">
+                        {arrival.train.name}
+                     </p>
+                  </div>
+                  <div className="details_info details_info--city">
+                     <p className="details_info-title">Название</p>
+                     <p className="details_info-text details_info-text--route">
+                        {arrival.from.city.name}
+                        <br />
+                        {arrival.to.city.name}
+                     </p>
+                  </div>
+                  <div className="details_info details_info--route">
+                     <div className="route">
+                        <div className="route_info">
+                           <p className="route_time">
+                              {moment
+                                 .unix(arrival.from.datetime)
+                                 .format('HH:mm')}
+                           </p>
+                           <p className="route_date">
+                              {moment
+                                 .unix(arrival.from.datetime)
+                                 .format('DD.MM.YYYY')}
+                           </p>
+                        </div>
+                        <div className="route_duration">
+                           <p className="route_duration-time">
+                              {formatSeconds(arrival.duration)}
+                           </p>
+                           {arrivalSvg}
+                        </div>
+                        <div className="route_info route_info--right">
+                           <p className="route_time">
+                              {moment.unix(arrival.to.datetime).format('hh:mm')}
+                           </p>
+                           <p className="route_date">
+                              {moment
+                                 .unix(arrival.to.datetime)
+                                 .format('DD.MM.YYYY')}
+                           </p>
+                        </div>
                      </div>
-                     <div className="route_duration">
-                        <p className="route_duration-time">
-                           {formatSeconds(arrival.duration)}
-                        </p>
-                        {arrivalSvg}
-                     </div>
-                     <div className="route_info route_info--right">
-                        <p className="route_time">
-                           {moment.unix(arrival.to.datetime).format('hh:mm')}
-                        </p>
-                        <p className="route_date">
-                           {moment
-                              .unix(arrival.to.datetime)
-                              .format('DD.MM.YYYY')}
-                        </p>
+                     <div className="route">
+                        <div className="route_info">
+                           <p className="route_city">
+                              {arrival.from.city.name}
+                           </p>
+                           <p className="route_station">
+                              {arrival.from.railway_station_name}
+                              <br />
+                              вокзал
+                           </p>
+                        </div>
+                        <div className="route_info route_info--right">
+                           <p className="route_city">{arrival.to.city.name}</p>
+                           <p className="route_station">
+                              {arrival.to.railway_station_name}
+                              <br />
+                              вокзал
+                           </p>
+                        </div>
                      </div>
                   </div>
-                  <div className="route">
-                     <div className="route_info">
-                        <p className="route_city">{arrival.from.city.name}</p>
-                        <p className="route_station">
-                           {arrival.from.railway_station_name}
-                           <br />
-                           вокзал
-                        </p>
-                     </div>
-                     <div className="route_info route_info--right">
-                        <p className="route_city">{arrival.to.city.name}</p>
-                        <p className="route_station">
-                           {arrival.to.railway_station_name}
-                           <br />
-                           вокзал
-                        </p>
-                     </div>
-                  </div>
                </div>
             </div>
-         </div>
+         )}
 
          <div className="sidebar_inner">
             <div className="sidebar_header sidebar_header--passengers">
@@ -227,10 +234,13 @@ export default function Details() {
                      <PriceFormat
                         title="details_passenger-price"
                         value={
-                           passengersPrice.departure.adult +
-                           passengersPrice.arrival.adult +
-                           passengersPrice.departure.services +
-                           passengersPrice.arrival.services
+                           arrival
+                              ? passengersPrice.departure.adult +
+                                passengersPrice.arrival.adult +
+                                passengersPrice.departure.services +
+                                passengersPrice.arrival.services
+                              : passengersPrice.departure.adult +
+                                passengersPrice.departure.services
                         }
                      />
                      <img className="details-сurrency" src={rub} alt="руб." />

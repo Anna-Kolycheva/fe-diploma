@@ -160,6 +160,7 @@
    display: flex;
    justify-content: flex-end;
    align-items: flex-end;
+   margin-bottom: 140px;
 }
 .verification_button-next {
    height: 60px;

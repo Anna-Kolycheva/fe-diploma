@@ -15,6 +15,7 @@ export const fetchOrder = createAsyncThunk(
       const passengersArrival = passengers.passengers.slice();
       const seatsDeparture = seats.departure.seats;
       const seatsArrival = seats.arrival.seats;
+      const seatsCountArrival = seats.arrival.seatsCount;
       let countBabyDeparture = 0;
       let countBabyArrival = 0;
       const { baby } = passengers.passengersCount;
@@ -52,35 +53,37 @@ export const fetchOrder = createAsyncThunk(
          });
       }
 
-      for (const key in seatsArrival) {
-         seatsArrival[key].forEach((seat) => {
-            const person = passengersArrival.shift();
-            let include_children = false;
-            if (person.type === 'adult' && baby > countBabyArrival) {
-               countBabyArrival += 1;
-               include_children = true;
-            }
-            const obj = {
-               coach_id: key,
-               seat_number: seat,
-               person_info: {
-                  is_adult: person.type === 'adult',
-                  first_name: person.name,
-                  last_name: person.surname,
-                  patronymic: person.lastname,
-                  gender: person.sex === 'male',
-                  birthday: person.birth,
-                  document_type:
-                     person.series !== ''
-                        ? 'паспорт'
-                        : 'свидетельство о рождении',
-                  document_data: `${person.series} ${person.document}`,
-               },
-               is_child: person.type === 'child',
-               include_children_seat: include_children,
-            };
-            arrivalArrSeats.push(obj);
-         });
+      if (seatsCountArrival !== 0) {
+         for (const key in seatsArrival) {
+            seatsArrival[key].forEach((seat) => {
+               const person = passengersArrival.shift();
+               let include_children = false;
+               if (person.type === 'adult' && baby > countBabyArrival) {
+                  countBabyArrival += 1;
+                  include_children = true;
+               }
+               const obj = {
+                  coach_id: key,
+                  seat_number: seat,
+                  person_info: {
+                     is_adult: person.type === 'adult',
+                     first_name: person.name,
+                     last_name: person.surname,
+                     patronymic: person.lastname,
+                     gender: person.sex === 'male',
+                     birthday: person.birth,
+                     document_type:
+                        person.series !== ''
+                           ? 'паспорт'
+                           : 'свидетельство о рождении',
+                     document_data: `${person.series} ${person.document}`,
+                  },
+                  is_child: person.type === 'child',
+                  include_children_seat: include_children,
+               };
+               arrivalArrSeats.push(obj);
+            });
+         }
       }
       const user = {
          first_name: payer.name,
@@ -94,13 +97,21 @@ export const fetchOrder = createAsyncThunk(
          route_direction_id: seats.train.train.departure._id,
          seats: departureArrSeats,
       };
-      const arrival = {
-         route_direction_id: seats.train.train.arrival._id,
-         seats: arrivalArrSeats,
-      };
-      const data = { user, departure, arrival };
+      const arrival =
+         seatsCountArrival !== 0
+            ? {
+                 route_direction_id: seats.train.train.arrival._id,
+                 seats: arrivalArrSeats,
+              }
+            : {};
+
+      const data =
+         seatsCountArrival === 0
+            ? { user, departure }
+            : { user, departure, arrival };
 
       const url = `${process.env.REACT_APP_URL}order`;
+
       try {
          const response = await fetch(url, {
             method: 'POST',
@@ -130,6 +141,8 @@ const orderSlice = createSlice({
    reducers: {
       clearStatus: (state) => {
          state.status = null;
+         state.orderStatus = null;
+         state.error = null;
       },
    },
    extraReducers: {

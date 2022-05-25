@@ -42,6 +42,21 @@ const passengersSlice = createSlice({
             JSON.stringify(state.passengersPrice)
          );
       },
+      passengersPriceClear: (state) => {
+         state.passengersPrice = {
+            departure: {
+               adult: 0,
+               child: 0,
+               services: 0,
+            },
+            arrival: {
+               adult: 0,
+               child: 0,
+               services: 0,
+            },
+         };
+      },
+
       addPassengersData: (state, action) => {
          const { number, data } = action.payload;
          if (state.passengers.filter((el) => el.number === number).length > 0) {
@@ -67,6 +82,7 @@ const passengersSlice = createSlice({
 export const {
    passengersCountChange,
    passengersPriceChange,
+   passengersPriceClear,
    addPassengersData,
    clearPassengersData,
 } = passengersSlice.actions;

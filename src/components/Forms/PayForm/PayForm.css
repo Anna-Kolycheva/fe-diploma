@@ -90,15 +90,6 @@
    color: #ffa800;
 }
 
-/* .payForm_field {
-   box-sizing: border-box;
-   height: 50px;
-
-   background: #ffffff;
-   border: 1px solid #928f94;
-   border-radius: 5px;
-} */
-
 .payForm_label-contact:last-child {
    margin-top: 38px;
 }
@@ -161,22 +152,24 @@
    color: #292929;
 }
 
+.payForm_buttons {
+   height: 183px;
+   width: 100%;
+   display: flex;
+   justify-content: flex-end;
+   align-items: flex-end;
+   margin-bottom: 140px;
+}
 .payForm_button {
-   margin-left: auto;
-   margin-top: 100px;
    height: 60px;
    padding: 0 70px 0 70px;
-
    font-weight: 700;
    font-size: 24px;
    text-transform: uppercase;
    color: #ffffff;
-
    background: #ffa800;
    border-radius: 5px;
    border: none;
-   position: absolute;
-   right: 0;
 }
 
 .payForm_button:hover {

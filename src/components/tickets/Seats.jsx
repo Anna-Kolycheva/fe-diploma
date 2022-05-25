@@ -2,7 +2,8 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
-import { fetchSeats } from '../../slices/seatsSlice';
+import { fetchSeats, coachItemsClear } from '../../slices/seatsSlice';
+import { passengersPriceClear } from '../../slices/passengersSlice';
 import Ticket from './seats/Ticket';
 import './Seats.css';
 
@@ -17,6 +18,7 @@ export default function Seats() {
    const { passengersCount } = useSelector((state) => state.passengers);
 
    useEffect(() => {
+      dispatch(passengersPriceClear());
       dispatch(fetchSeats('departure'));
       if (train.arrival) dispatch(fetchSeats('arrival'));
    }, [dispatch]);
@@ -24,14 +26,12 @@ export default function Seats() {
    const handleClick = () => {
       const passengersCountAll =
          Number(passengersCount.adult) + Number(passengersCount.child);
-      if (
-         seatsDeparture !== 0 &&
-         seatsarrival !== 0 &&
-         Number(seatsDeparture) === passengersCountAll &&
-         Number(seatsarrival) === passengersCountAll
-      ) {
-         novigate('/order/passengers/');
-      }
+      if (seatsarrival !== 0 && Number(seatsarrival) !== passengersCountAll)
+         return;
+      if (seatsDeparture === 0 || Number(seatsDeparture) !== passengersCountAll)
+         return;
+
+      novigate('/order/passengers/');
    };
 
    return (
@@ -43,13 +43,15 @@ export default function Seats() {
          {train.arrival && (
             <Ticket type="arrival" className="ticket_header-train" />
          )}
-         <button
-            type="button"
-            className="button seats_button"
-            onClick={handleClick}
-         >
-            Далее
-         </button>
+         <div className="seats_buttons">
+            <button
+               type="button"
+               className="button seats_button"
+               onClick={handleClick}
+            >
+               Далее
+            </button>
+         </div>
       </section>
    );
 }

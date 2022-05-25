@@ -49,13 +49,15 @@ export default function Passengers() {
                />
             )
          )}
-         <button
-            type="button"
-            className="button passengers_button"
-            onClick={handleClick}
-         >
-            Далее
-         </button>
+         <div className="passengers_buttons">
+            <button
+               type="button"
+               className="button passengers_button"
+               onClick={handleClick}
+            >
+               Далее
+            </button>
+         </div>
       </section>
    );
 }

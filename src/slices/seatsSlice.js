@@ -114,6 +114,7 @@ const seatsSlice = createSlice({
          state[type].seatsCount -= 1;
          localStorage.setItem(`seats-${type}`, JSON.stringify(state[type]));
       },
+
       serviceItemSelect: (state, action) => {
          const { id, service, type } = action.payload;
          state[type].services[id].push(service);

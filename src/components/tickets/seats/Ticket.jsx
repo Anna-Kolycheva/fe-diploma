@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
@@ -24,6 +24,10 @@ export default function Ticket({ type }) {
    const { passengersCount } = useSelector((state) => state.passengers);
    const dispatch = useDispatch();
    const navigate = useNavigate();
+
+   useEffect(() => {
+      dispatch(coachItemsClear({ type }));
+   }, []);
 
    const available = {
       adult: 4 - passengersCount.adult - passengersCount.child,
