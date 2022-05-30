@@ -42,6 +42,7 @@ export default function PassengerForm({ number, type }) {
 
    const onSubmit = (e) => {
       e.preventDefault();
+
       if (
          form.surname.trim() &&
          form.name.trim() &&
@@ -50,7 +51,7 @@ export default function PassengerForm({ number, type }) {
          form.birth &&
          (!form.series ||
             (form.series && validateDocument('series', form.series))) &&
-         validateDocument(type, form.document)
+         validateDocument(documentType, form.document)
       ) {
          dispatch(addPassengersData({ number, data: form }));
       }

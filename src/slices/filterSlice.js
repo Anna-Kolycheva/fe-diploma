@@ -1,14 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = JSON.parse(localStorage.getItem('filter')) || {
-   from_city_id: '',
-   to_city_id: '',
-
-   date_start: undefined,
-   date_end: undefined,
-   date_start_arrival: undefined,
-   date_end_arrival: undefined,
-
    have_first_class: false,
    have_second_class: true,
    have_third_class: true,

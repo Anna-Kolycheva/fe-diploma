@@ -5,49 +5,33 @@ import { useSelector, useDispatch } from 'react-redux';
 import DatePicker from 'react-datepicker';
 import ru from 'date-fns/locale/ru';
 import 'react-datepicker/dist/react-datepicker.css';
-import { filterChange } from '../../../slices/filterSlice';
+import { serchFieldChange } from '../../../slices/searchSlice';
 
 export default function DateFilter() {
    const dispatch = useDispatch();
-   const dateStart = useSelector((state) => state.search.dateStart);
-   const dateEnd = useSelector((state) => state.search.dateEnd);
-   const start = useSelector((state) => state.filter.date_start_arrival);
-   const end = useSelector((state) => state.filter.date_end_arrival);
-   const [startArrival, setStart] = useState();
-   const [endArrival, setEnd] = useState();
+
+   const dateStart = useSelector((state) => state.search.date_start);
+   const dateEnd = useSelector((state) => state.search.date_end);
+   const [start, setStart] = useState();
+   const [end, setEnd] = useState();
 
    useEffect(() => {
-      dispatch(
-         filterChange({
-            name: 'date_start',
-            value: dateStart,
-         })
-      );
-      dispatch(
-         filterChange({
-            name: 'date_end',
-            value: dateEnd,
-         })
-      );
-   }, []);
-
-   useEffect(() => {
-      if (start) {
-         setStart(new Date(start));
+      if (dateStart) {
+         setStart(new Date(dateStart));
       }
-   }, [start]);
+   }, [dateStart]);
 
    useEffect(() => {
-      if (end) {
-         setEnd(new Date(end));
+      if (dateEnd) {
+         setEnd(new Date(dateEnd));
       }
-   }, [end]);
+   }, [dateEnd]);
 
    const handleChange = (name, date) => {
       const str = date.toLocaleDateString();
       const format = `${str.slice(-4)}-${str.slice(3, 5)}-${str.slice(0, 2)}`;
       dispatch(
-         filterChange({
+         serchFieldChange({
             name,
             value: format,
          })
@@ -73,19 +57,14 @@ export default function DateFilter() {
                <label className="dateFilter_title">
                   Дата поездки
                   <DatePicker
-                     id="dateStart"
                      locale={ru}
                      dateFormat="dd.MM.yyyy"
-                     selected={startArrival}
+                     selected={start}
                      selectsStart
-                     startDate={startArrival}
-                     endDate={endArrival}
-                     minDate={new Date(dateStart)}
-                     maxDate={new Date(dateEnd)}
+                     startDate={start}
+                     endDate={end}
                      customInput={<Input />}
-                     onChange={(date) =>
-                        handleChange('date_start_arrival', date)
-                     }
+                     onChange={(date) => handleChange('date_start', date)}
                   />
                </label>
             </div>
@@ -93,17 +72,15 @@ export default function DateFilter() {
                <label className="dateFilter_title">
                   Дата возвращения
                   <DatePicker
-                     id="dateEnd"
                      locale={ru}
                      dateFormat="dd.MM.yyyy"
-                     selected={endArrival}
+                     selected={end}
                      selectsEnd
-                     startDate={startArrival}
-                     endDate={endArrival}
-                     minDate={new Date(dateStart)}
-                     maxDate={new Date(dateEnd)}
+                     startDate={start}
+                     endDate={end}
+                     minDate={start}
                      customInput={<Input />}
-                     onChange={(date) => handleChange('date_end_arrival', date)}
+                     onChange={(date) => handleChange('date_end', date)}
                   />
                </label>
             </div>

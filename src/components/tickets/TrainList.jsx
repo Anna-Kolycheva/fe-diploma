@@ -14,6 +14,7 @@ export default function TrainList() {
    const count = useSelector((state) => state.routes.total_count);
    const trains = useSelector((state) => state.routes.routes);
    const filter = useSelector((state) => state.filter);
+   const search = useSelector((state) => state.search);
    const { sort, limit } = filter;
 
    const limits = [5, 10, 20];
@@ -24,7 +25,7 @@ export default function TrainList() {
 
    useEffect(() => {
       dispatch(fetchRoutes());
-   }, [filter]);
+   }, [filter, search]);
 
    const handleChange = (name, value) => {
       dispatch(filterChange({ name, value }));

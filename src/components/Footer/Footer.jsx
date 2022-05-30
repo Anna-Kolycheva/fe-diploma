@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Footer.css';
 import { HashLink } from 'react-router-hash-link';
+import validateEmail from '../elements/validateEmail';
 
 import {
    phone,
@@ -16,6 +17,20 @@ import {
 } from './footer-icons';
 
 export default function Footer() {
+   const [emailSubscribe, setEmail] = useState('');
+   const onSubscribe = (e) => {
+      e.preventDefault();
+      if (validateEmail(emailSubscribe)) {
+         fetch(`${process.env.REACT_APP_URL}subscribe?email=${emailSubscribe}`)
+            .then((response) => response.json())
+            .then((data) => console.log(data));
+      }
+   };
+   const onSetEmail = (event) => {
+      const { value } = event.target;
+      setEmail(value);
+   };
+
    return (
       <footer className="footer" id="contacts">
          <div className="footer_content content_wrapper">
@@ -55,12 +70,7 @@ export default function Footer() {
                   <h3 className="footer_subscribe-title footer-title">
                      Подписка
                   </h3>
-                  <form
-                     className="footer_form"
-                     onSubmit={(e) => {
-                        e.preventDefault();
-                     }}
-                  >
+                  <form className="footer_form" onSubmit={onSubscribe}>
                      <label
                         className="footer_form-label"
                         htmlFor="subscription"
@@ -72,11 +82,14 @@ export default function Footer() {
                               type="email"
                               id="subscription"
                               placeholder="e-mail"
+                              value={emailSubscribe}
+                              onChange={onSetEmail}
                            />
                            <button
                               className="footer_form-button"
                               id="button"
                               type="button"
+                              onClick={onSubscribe}
                            >
                               Отправить
                            </button>
