@@ -6,6 +6,8 @@ import { addPassengersData } from '../../../slices/passengersSlice';
 import './PassengerForm.css';
 
 export default function PassengerForm({ number, type }) {
+   const dispatch = useDispatch();
+
    const [active, setActive] = useState(false);
    const [documentType, setDocumentType] = useState(
       type === 'adult' ? 'passport' : 'certificate'
@@ -24,8 +26,7 @@ export default function PassengerForm({ number, type }) {
       series: passenger ? passenger.series : '',
       document: passenger ? passenger.document : '',
    });
-
-   const dispatch = useDispatch();
+   const [message, setMessage] = useState('');
 
    const handleShow = () => {
       setActive((prev) => !prev);
@@ -40,21 +41,44 @@ export default function PassengerForm({ number, type }) {
       setForm((prev) => ({ ...prev, sex: event.target.dataset.id }));
    };
 
+   const manageМessages = (text) => {
+      setMessage(text);
+      setTimeout(() => setMessage(''), 10 * 1000);
+   };
+
    const onSubmit = (e) => {
       e.preventDefault();
-
-      if (
-         form.surname.trim() &&
-         form.name.trim() &&
-         form.lastname.trim() &&
-         form.sex &&
-         form.birth &&
-         (!form.series ||
-            (form.series && validateDocument('series', form.series))) &&
-         validateDocument(documentType, form.document)
-      ) {
-         dispatch(addPassengersData({ number, data: form }));
+      if (!(form.surname.trim() && form.name.trim() && form.lastname.trim())) {
+         manageМessages('Необходимо ввести фамилию, имя и отчество пассажира');
+         return;
       }
+      if (!form.sex) {
+         manageМessages('Выберите пол пассажира');
+         return;
+      }
+      if (!form.birth) {
+         manageМessages('Укажите дату рождения в формате дд-мм-гг');
+         return;
+      }
+      if (
+         documentType === 'certificate' &&
+         !validateDocument(documentType, form.document)
+      ) {
+         manageМessages(
+            'Номер свидетельства о рожденни указан некорректно Пример: VIII-ЫП-123456'
+         );
+         return;
+      }
+      if (
+         documentType === 'passport' &&
+         (!(form.series && validateDocument('series', form.series)) ||
+            !validateDocument(documentType, form.document))
+      ) {
+         manageМessages('Номер или серия паспорта введы не некорректно');
+         return;
+      }
+      setMessage('');
+      dispatch(addPassengersData({ number, data: form }));
    };
 
    return (
@@ -255,14 +279,31 @@ export default function PassengerForm({ number, type }) {
                   </label>
                </div>
             </div>
-            <div className="passengerForm-footer passengerForm-section">
-               <button
-                  type="button"
-                  className="button passengerForm-button"
-                  onClick={onSubmit}
-               >
-                  Следующий пассажир
-               </button>
+            <div
+               className={`passengerForm-footer passengerForm-section ${
+                  passenger ? 'done' : ''
+               } ${message ? 'warning' : ''}`}
+            >
+               {passenger && (
+                  <div className="passengerForm-massage">
+                     <span className="massage-done-img" />
+                     <span className="massage-done">Готово</span>
+                  </div>
+               )}
+               {message ? (
+                  <div className="passengerForm-massage">
+                     <span className="massage-warning-img" />
+                     <span className="massage-warning">{message}</span>
+                  </div>
+               ) : (
+                  <button
+                     type="button"
+                     className="button passengerForm-button"
+                     onClick={onSubmit}
+                  >
+                     Следующий пассажир
+                  </button>
+               )}
             </div>
          </div>
       </div>

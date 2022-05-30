@@ -187,16 +187,6 @@ p.passengerForm-label {
    height: 28px;
 }
 
-/* .passengerForm_checkbox:checked {
-   color: #ffa800;
-   border-color: #ffa800;
-   background-color: #ffa800;
-   background-image: url('../../../img/form/checkbox.svg');
-   background-repeat: no-repeat;
-   background-position: center;
-   background-size: 23px 18px;
-} */
-
 .passengerForm_checkbox-label {
    font-weight: 400;
    font-size: 18px;
@@ -260,6 +250,44 @@ p.passengerForm-label {
 }
 
 .passengerForm-footer {
+   box-sizing: border-box;
    display: flex;
    justify-content: end;
+   align-items: center;
+   min-height: 126px;
+}
+
+.passengerForm-footer.done {
+   background-color: #b2f6a1;
+}
+
+.passengerForm-footer.warning {
+   background-color: rgba(255, 61, 0, 0.38);
+}
+
+.passengerForm-massage {
+   margin-right: auto;
+   font-weight: 400;
+   font-size: 18px;
+   line-height: 21px;
+   color: #ffffff;
+
+   display: flex;
+   align-items: center;
+}
+
+.massage-done-img {
+   background-image: url('../../../img/form/done.svg');
+   width: 32px;
+   height: 32px;
+   margin-right: 15px;
+   background-repeat: no-repeat;
+}
+
+.massage-warning-img {
+   background-image: url('../../../img/form/warning.svg');
+   width: 32px;
+   height: 32px;
+   margin-right: 15px;
+   background-repeat: no-repeat;
 }

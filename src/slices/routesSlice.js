@@ -13,9 +13,6 @@ export const fetchRoutes = createAsyncThunk(
       let url = `${process.env.REACT_APP_URL}routes?from_city_id=${from_city_id}&to_city_id=${to_city_id}`;
       const { date_start, date_end } = getState().search;
 
-      console.log(filter);
-      console.log(date_start, date_end);
-
       if (date_start) {
          url += `&date_start=${date_start}`;
       }
@@ -30,6 +27,7 @@ export const fetchRoutes = createAsyncThunk(
          }
       }
       url += options;
+      console.log(url);
       try {
          const response = await fetch(url);
 
