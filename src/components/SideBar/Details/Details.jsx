@@ -50,7 +50,11 @@ export default function Details() {
                />
             </div>
 
-            <div className={`${isHidden.departure ? '' : 'hidden'} `}>
+            <div
+               className={`details-wrapper ${
+                  isHidden.departure ? '' : 'hidden'
+               } `}
+            >
                <div className="details_info">
                   <p className="details_info-title">№ Поезда</p>
                   <p className="details_info-text details_info-text--train">
@@ -138,7 +142,11 @@ export default function Details() {
                   />
                </div>
 
-               <div className={`${isHidden.arrival ? '' : 'hidden'} `}>
+               <div
+                  className={`details-wrapper ${
+                     isHidden.arrival ? '' : 'hidden'
+                  } `}
+               >
                   <div className="details_info">
                      <p className="details_info-title">№ Поезда</p>
                      <p className="details_info-text details_info-text--train">

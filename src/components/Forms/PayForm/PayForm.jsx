@@ -19,10 +19,27 @@ export default function PayForm() {
       email: '',
       pay: '',
    });
+   const [disabled, setDisabled] = useState(true);
 
    useEffect(() => {
       dispatch(stageChange({ stage: 3 }));
    }, []);
+
+   useEffect(() => {
+      setDisabled(true);
+      if (
+         !(
+            form.surname &&
+            form.name &&
+            form.lastname &&
+            form.phone &&
+            form.email &&
+            form.pay
+         )
+      )
+         return;
+      setDisabled(false);
+   }, [form]);
 
    const handleChange = (event) => {
       const { name, value } = event.target;
@@ -35,17 +52,17 @@ export default function PayForm() {
    const handleClick = (event) => {
       event.preventDefault();
 
-      if (
-         form.surname &&
-         form.name &&
-         form.lastname &&
-         form.phone &&
-         form.email &&
-         form.pay
-      ) {
-         dispatch(addPayerData({ data: form }));
-         novigate('/order/verifycation/');
-      }
+      // if (
+      //    form.surname &&
+      //    form.name &&
+      //    form.lastname &&
+      //    form.phone &&
+      //    form.email &&
+      //    form.pay
+      // ) {
+      dispatch(addPayerData({ data: form }));
+      novigate('/order/verifycation/');
+      // }
    };
 
    return (
@@ -176,6 +193,7 @@ export default function PayForm() {
                type="button"
                className="button payForm_button"
                onClick={handleClick}
+               disabled={disabled}
             >
                Купить билеты
             </button>

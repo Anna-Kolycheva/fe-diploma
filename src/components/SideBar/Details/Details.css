@@ -29,7 +29,7 @@
 .title--small {
    font-weight: 700;
    margin-left: 40px;
-   margin-top: 46px;
+   margin-top: 70px;
    margin-bottom: 0;
 }
 
@@ -44,7 +44,10 @@
    position: relative;
    display: flex;
    align-items: flex-end;
-   margin-bottom: 50px;
+
+   /* height: 60px; */
+
+   /* margin-bottom: 50px; */
 }
 
 .title-goThere::before {
@@ -87,6 +90,9 @@
    margin-left: auto;
 
    border: 2px solid #c4c4c4;
+}
+.details-wrapper {
+   margin-top: 32px;
 }
 
 .details_info {
@@ -209,6 +215,8 @@
    font-weight: 400;
    font-size: 18px;
    line-height: 21px;
+
+   margin-top: 32px;
 
    color: #e5e5e5;
 }

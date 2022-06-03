@@ -27,7 +27,7 @@ export const fetchRoutes = createAsyncThunk(
          }
       }
       url += options;
-      console.log(url);
+
       try {
          const response = await fetch(url);
 

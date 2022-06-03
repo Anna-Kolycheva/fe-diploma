@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 
@@ -23,14 +23,23 @@ export default function Seats() {
       if (train.arrival) dispatch(fetchSeats('arrival'));
    }, [dispatch]);
 
-   const handleClick = () => {
-      const passengersCountAll =
-         Number(passengersCount.adult) + Number(passengersCount.child);
-      if (seatsarrival !== 0 && Number(seatsarrival) !== passengersCountAll)
+   const [disabled, setDisabled] = useState(true);
+   const passengersCountAll =
+      Number(passengersCount.adult) + Number(passengersCount.child);
+
+   useEffect(() => {
+      setDisabled(true);
+      if (
+         train.arrival &&
+         (seatsarrival === 0 || Number(seatsarrival) !== passengersCountAll)
+      )
          return;
       if (seatsDeparture === 0 || Number(seatsDeparture) !== passengersCountAll)
          return;
+      setDisabled(false);
+   }, [passengersCount, seatsarrival, seatsDeparture, passengersCountAll]);
 
+   const handleClick = () => {
       novigate('/order/passengers/');
    };
 
@@ -48,6 +57,7 @@ export default function Seats() {
                type="button"
                className="button seats_button"
                onClick={handleClick}
+               disabled={disabled}
             >
                Далее
             </button>

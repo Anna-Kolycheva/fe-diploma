@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
 import { nanoid } from 'nanoid';
@@ -14,25 +14,26 @@ export default function Passengers() {
    const novigate = useNavigate();
 
    const { passengersCount } = useSelector((state) => state.passengers);
+   const passengersCountTotal =
+      passengersCount.adult + passengersCount.child + passengersCount.baby;
    const { passengers } = useSelector((state) => state.passengers);
+   const [disabled, setDisabled] = useState(true);
 
    useEffect(() => {
       dispatch(stageChange({ stage: 2 }));
-      if (
-         passengersCount.adult + passengersCount.child + passengersCount.baby <
-         passengers.length
-      ) {
+      if (passengersCountTotal < passengers.length) {
          dispatch(clearPassengersData());
       }
    }, []);
 
+   useEffect(() => {
+      setDisabled(true);
+      if (passengers.length !== passengersCountTotal) return;
+      setDisabled(false);
+   }, [passengersCount, passengers]);
+
    const handleClick = () => {
-      if (
-         passengers.length ===
-         passengersCount.adult + passengersCount.child + passengersCount.baby
-      ) {
-         novigate('/order/pay/');
-      }
+      novigate('/order/pay/');
    };
 
    return (
@@ -54,6 +55,7 @@ export default function Passengers() {
                type="button"
                className="button passengers_button"
                onClick={handleClick}
+               disabled={disabled}
             >
                Далее
             </button>

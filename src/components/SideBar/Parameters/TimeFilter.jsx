@@ -15,8 +15,9 @@ export default function TimeFilter() {
       end_departure_hour_to,
       end_arrival_hour_from,
       end_arrival_hour_to,
-      dateEnd,
+      // dateEnd,
    } = useSelector((state) => state.filter);
+   const { date_end } = useSelector((state) => state.search);
    const dispatch = useDispatch();
 
    const [isHidden, setHidden] = useState({
@@ -85,7 +86,7 @@ export default function TimeFilter() {
             </div>
          </div>
          <div className="timeFilter">
-            <div className={`timeFilter_inner ${dateEnd ? '' : 'hiddenn'}`}>
+            <div className={`timeFilter_inner ${date_end ? '' : 'hidden'}`}>
                <div className="timeFilter_header">
                   <h4 className="timeFilter_header-title title title-goBack">
                      Обратно

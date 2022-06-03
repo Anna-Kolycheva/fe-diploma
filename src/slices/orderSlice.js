@@ -85,6 +85,7 @@ export const fetchOrder = createAsyncThunk(
             });
          }
       }
+
       const user = {
          first_name: payer.name,
          last_name: payer.surname,
@@ -122,6 +123,7 @@ export const fetchOrder = createAsyncThunk(
             throw new Error('Server Error');
          }
          const fetchData = await response.json();
+
          return fetchData;
       } catch (error) {
          return rejectWithValue(error.message);

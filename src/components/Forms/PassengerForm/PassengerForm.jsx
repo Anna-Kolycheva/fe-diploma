@@ -9,12 +9,20 @@ export default function PassengerForm({ number, type }) {
    const dispatch = useDispatch();
 
    const [active, setActive] = useState(false);
-   const [documentType, setDocumentType] = useState(
-      type === 'adult' ? 'passport' : 'certificate'
-   );
 
    const { passengers } = useSelector((state) => state.passengers);
    const passenger = passengers.find((e) => e.number === number);
+
+   // if (passenger && passenger.series) {
+   //    setDocumentType('passport');
+   // }
+
+   const [documentType, setDocumentType] = useState(
+      type === 'adult' || (passenger && passenger.series)
+         ? 'passport'
+         : 'certificate'
+   );
+
    const [form, setForm] = useState({
       number,
       type,
@@ -233,12 +241,16 @@ export default function PassengerForm({ number, type }) {
                         <option className="passengerForm-item" value="passport">
                            Паспорт РФ
                         </option>
-                        <option
-                           className="passengerForm-item"
-                           value="certificate"
-                        >
-                           Свидетельство о рождении
-                        </option>
+                        {type !== 'adult' ? (
+                           <option
+                              className="passengerForm-item"
+                              value="certificate"
+                           >
+                              Свидетельство о рождении
+                           </option>
+                        ) : (
+                           ''
+                        )}
                      </select>
                   </label>
                   {documentType === 'passport' && (

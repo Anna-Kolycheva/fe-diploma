@@ -268,7 +268,6 @@
 /* timeFilter */
 .timeFilter {
    position: relative;
-   padding-bottom: 10px;
 }
 
 .timeFilter::after {
@@ -390,6 +389,8 @@
    display: flex;
    justify-content: space-between;
    align-items: center;
+
+   padding-bottom: 10px;
 }
 
 .hidden {
